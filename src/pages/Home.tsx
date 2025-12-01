@@ -1,6 +1,5 @@
-import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Zap, Layers, GitMerge, TrendingUp, Activity, BarChart3 } from 'lucide-react';
+import { ArrowRight, Zap, Layers, GitMerge, TrendingUp, Activity } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { Link } from 'react-router-dom';

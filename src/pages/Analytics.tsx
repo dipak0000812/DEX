@@ -1,4 +1,3 @@
-import React from 'react';
 import { BarChart3, DollarSign, Activity, TrendingUp, ArrowUpRight, ArrowDownRight } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -55,19 +54,6 @@ const Analytics = () => {
                 <Card className="p-6 relative overflow-hidden group">
                     <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                         <DollarSign className="w-16 h-16" />
-                    </div>
-                    <div className="text-text-secondary text-sm mb-2">Total Value Locked</div>
-                    <div className="text-2xl font-bold mb-1">
-                        {numeral(displayStats.tvl).format('$0.00a')}
-                    </div>
-                    <div className="text-green-400 text-sm flex items-center gap-1">
-                        <TrendingUp className="w-3 h-3" /> +12.5%
-                    </div>
-                </Card>
-
-                <Card className="p-6 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <Activity className="w-16 h-16" />
                     </div>
                     <div className="text-text-secondary text-sm mb-2">24h Volume</div>
                     <div className="text-2xl font-bold mb-1">
