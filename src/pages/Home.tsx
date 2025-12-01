@@ -4,6 +4,8 @@ import { Button } from '../components/ui/Button';
 import { GlassCard } from '../components/ui/GlassCard';
 import { Link } from 'react-router-dom';
 
+import FloatingCoins from '../components/FloatingCoins';
+
 const Home = () => {
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -30,6 +32,7 @@ const Home = () => {
     return (
         <div className="relative min-h-screen overflow-hidden">
             {/* Background Elements */}
+            <FloatingCoins />
             <div className="fixed inset-0 z-0 pointer-events-none">
                 <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 rounded-full blur-[120px] animate-pulse-slow" />
                 <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary/20 rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: '2s' }} />

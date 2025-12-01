@@ -21,7 +21,11 @@ const Swap = () => {
     const [fromToken, setFromToken] = useState<Token>(TOKENS.TKA);
     const [toToken, setToToken] = useState<Token>(TOKENS.TKB);
     const [fromAmount, setFromAmount] = useState('');
-    const [slippage] = useState(0.5); // 0.5%
+    // Settings State
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+    const [slippage, setSlippage] = useState(0.5);
+    const [deadline, setDeadline] = useState(20); // minutes
+    const [expertMode, setExpertMode] = useState(false);
     const [showChart, setShowChart] = useState(false);
 
     // Token Selection State
@@ -152,45 +156,67 @@ const Swap = () => {
                         exit={{ opacity: 0, x: -20, width: 0 }}
                         className="hidden lg:block w-full max-w-2xl overflow-hidden"
                     >
-                        <GlassCard className="h-[600px] p-6">
+                        <GlassCard className="h-[600px] p-6 flex flex-col">
                             <div className="flex justify-between items-center mb-6">
                                 <div className="flex items-center gap-2">
                                     <div className="flex -space-x-2">
                                         <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-xs border-2 border-background z-10">{fromToken.logo}</div>
-                                        <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-xs border-2 border-background">{toToken.logo}</div>
+                                        <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center text-xs border-2 border-background">{toToken.logo}</div>
                                     </div>
-                                    <h3 className="text-xl font-bold">{fromToken.symbol}/{toToken.symbol}</h3>
+                                    <div>
+                                        <h3 className="text-xl font-bold flex items-center gap-2">
+                                            {fromToken.symbol}/{toToken.symbol}
+                                            <span className="text-sm font-normal text-text-secondary bg-white/5 px-2 py-0.5 rounded">V3</span>
+                                        </h3>
+                                        <div className="flex items-center gap-2 text-sm">
+                                            <span className="font-bold text-2xl">1,850.24</span>
+                                            <span className="text-green-400">+2.4%</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="flex gap-2">
+                                <div className="flex gap-1 bg-white/5 p-1 rounded-xl">
                                     {['1H', '1D', '1W', '1M', '1Y'].map((tf) => (
-                                        <button key={tf} className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${tf === '1D' ? 'bg-white/10 text-white' : 'text-text-secondary hover:text-white'}`}>
+                                        <button key={tf} className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${tf === '1D' ? 'bg-white/10 text-white shadow-sm' : 'text-text-secondary hover:text-white'}`}>
                                             {tf}
                                         </button>
                                     ))}
                                 </div>
                             </div>
 
-                            {/* Mock Chart Area */}
-                            <div className="w-full h-[450px] bg-gradient-to-b from-primary/5 to-transparent rounded-xl border border-white/5 relative overflow-hidden group">
-                                <div className="absolute inset-0 flex items-center justify-center text-text-secondary/30 font-medium">
-                                    Interactive Chart Coming Soon
+                            {/* Enhanced Mock Chart */}
+                            <div className="flex-1 w-full bg-gradient-to-b from-primary/5 to-transparent rounded-xl border border-white/5 relative overflow-hidden group">
+                                {/* Grid Lines */}
+                                <div className="absolute inset-0 grid grid-cols-6 grid-rows-4">
+                                    {[...Array(24)].map((_, i) => (
+                                        <div key={i} className="border-r border-b border-white/5" />
+                                    ))}
                                 </div>
-                                {/* Animated Line */}
-                                <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
-                                    <path
-                                        d="M0,400 C100,350 200,420 300,300 C400,180 500,250 600,200 C700,150 800,100 900,120"
-                                        fill="none"
-                                        stroke="url(#gradient)"
-                                        strokeWidth="3"
-                                        className="drop-shadow-[0_0_10px_rgba(0,245,255,0.5)]"
-                                    />
-                                    <defs>
-                                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                            <stop offset="0%" stopColor="#00F5FF" />
-                                            <stop offset="100%" stopColor="#B026FF" />
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
+
+                                {/* Candles (Mock) */}
+                                <div className="absolute inset-0 flex items-end justify-around px-4 pb-8">
+                                    {[...Array(20)].map((_, i) => {
+                                        const height = Math.random() * 60 + 20;
+                                        const isGreen = Math.random() > 0.4;
+                                        return (
+                                            <div key={i} className="flex flex-col items-center gap-1 w-2 group/candle">
+                                                <div className={`w-[1px] h-full ${isGreen ? 'bg-green-500/50' : 'bg-red-500/50'}`} style={{ height: `${height + 20}%` }} />
+                                                <div
+                                                    className={`w-full rounded-sm ${isGreen ? 'bg-green-500' : 'bg-red-500'}`}
+                                                    style={{ height: `${height}%` }}
+                                                />
+                                                {/* Tooltip */}
+                                                <div className="absolute top-4 opacity-0 group-hover/candle:opacity-100 bg-black/80 text-[10px] p-1 rounded text-white whitespace-nowrap z-10 pointer-events-none transition-opacity">
+                                                    Open: 1840.2<br />Close: 1850.5
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+
+                                {/* Current Price Line */}
+                                <div className="absolute top-[30%] left-0 right-0 border-t border-dashed border-primary/50 flex items-center">
+                                    <div className="absolute right-0 bg-primary text-black text-xs font-bold px-1 rounded-l">1850.24</div>
+                                </div>
                             </div>
                         </GlassCard>
                     </motion.div>
@@ -218,13 +244,88 @@ const Swap = () => {
                                 <TrendingUp className="w-5 h-5" />
                             </button>
                         </div>
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 relative">
                             <Button variant="ghost" size="sm" className="rounded-full w-10 h-10 p-0">
                                 <RefreshCw className="w-4 h-4 text-text-secondary" />
                             </Button>
-                            <Button variant="ghost" size="sm" className="rounded-full w-10 h-10 p-0">
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className={`rounded-full w-10 h-10 p-0 ${isSettingsOpen ? 'bg-white/10 text-white' : ''}`}
+                                onClick={() => setIsSettingsOpen(!isSettingsOpen)}
+                            >
                                 <Settings className="w-5 h-5 text-text-secondary" />
                             </Button>
+
+                            {/* Settings Dropdown */}
+                            <AnimatePresence>
+                                {isSettingsOpen && (
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                                        exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                                        className="absolute top-12 right-0 w-72 bg-[#0A0E27] border border-white/10 rounded-2xl shadow-xl p-4 z-50"
+                                    >
+                                        <h3 className="text-sm font-bold mb-4">Transaction Settings</h3>
+
+                                        {/* Slippage */}
+                                        <div className="mb-4">
+                                            <div className="flex items-center gap-1 mb-2">
+                                                <span className="text-xs text-text-secondary">Slippage Tolerance</span>
+                                                <Info className="w-3 h-3 text-text-secondary" />
+                                            </div>
+                                            <div className="flex gap-2 mb-2">
+                                                {[0.1, 0.5, 1.0].map((val) => (
+                                                    <button
+                                                        key={val}
+                                                        onClick={() => setSlippage(val)}
+                                                        className={`flex-1 py-1.5 rounded-lg text-sm font-medium transition-colors ${slippage === val ? 'bg-primary text-black' : 'bg-white/5 hover:bg-white/10'}`}
+                                                    >
+                                                        {val}%
+                                                    </button>
+                                                ))}
+                                                <div className="relative flex-1">
+                                                    <input
+                                                        type="number"
+                                                        value={slippage}
+                                                        onChange={(e) => setSlippage(parseFloat(e.target.value))}
+                                                        className="w-full h-full bg-white/5 rounded-lg px-2 text-right text-sm outline-none border border-transparent focus:border-primary/50"
+                                                    />
+                                                    <span className="absolute right-7 top-1.5 text-xs text-text-secondary">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Deadline */}
+                                        <div className="mb-4">
+                                            <div className="flex items-center gap-1 mb-2">
+                                                <span className="text-xs text-text-secondary">Transaction Deadline</span>
+                                                <Info className="w-3 h-3 text-text-secondary" />
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <input
+                                                    type="number"
+                                                    value={deadline}
+                                                    onChange={(e) => setDeadline(parseInt(e.target.value))}
+                                                    className="w-20 bg-white/5 rounded-lg px-3 py-1.5 text-right text-sm outline-none border border-transparent focus:border-primary/50"
+                                                />
+                                                <span className="text-sm text-text-secondary">minutes</span>
+                                            </div>
+                                        </div>
+
+                                        {/* Expert Mode */}
+                                        <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                                            <span className="text-sm font-medium">Expert Mode</span>
+                                            <button
+                                                onClick={() => setExpertMode(!expertMode)}
+                                                className={`w-10 h-6 rounded-full transition-colors relative ${expertMode ? 'bg-primary' : 'bg-white/10'}`}
+                                            >
+                                                <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-transform ${expertMode ? 'left-5' : 'left-1'}`} />
+                                            </button>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
                     </div>
 

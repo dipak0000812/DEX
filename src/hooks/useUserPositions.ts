@@ -52,6 +52,28 @@ export function useUserPositions(userAddress?: string) {
                 }
             }
 
+            // MOCK DATA: If no real positions found, return mock positions for demo
+            if (positions.length === 0 && userAddress) {
+                return [
+                    {
+                        poolAddress: '0xMockPool1',
+                        token0: 'TKA',
+                        token1: 'TKB',
+                        liquidity: 1000000000000000000n,
+                        liquidityFormatted: '1.0',
+                        poolName: 'TKA-TKB'
+                    },
+                    {
+                        poolAddress: '0xMockPool2',
+                        token0: 'ETH',
+                        token1: 'TKA',
+                        liquidity: 500000000000000000n,
+                        liquidityFormatted: '0.5',
+                        poolName: 'ETH-TKA'
+                    }
+                ];
+            }
+
             return positions;
         },
         enabled: !!userAddress,

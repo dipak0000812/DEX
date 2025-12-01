@@ -16,9 +16,13 @@ export function useTokenBalance(tokenAddress: string, userAddress?: string) {
 
     const formatted = balance ? formatUnits(balance as bigint, 18) : '0';
 
+    // MOCK DATA: If connected but balance is 0, show mock balance
+    const isMockMode = !!userAddress && (!balance || balance === 0n);
+    const mockBalance = 1000000000000000000000n; // 1000 tokens
+
     return {
-        balance: balance as bigint | undefined,
-        balanceFormatted: formatted,
+        balance: isMockMode ? mockBalance : (balance as bigint | undefined),
+        balanceFormatted: isMockMode ? '1000.0' : formatted,
         isLoading,
         refetch,
     };
