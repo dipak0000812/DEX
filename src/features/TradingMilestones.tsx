@@ -1,6 +1,6 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { Trophy, Zap, Activity, Shield, Clock, TrendingUp } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { Zap, Activity, Shield, Clock, TrendingUp } from 'lucide-react';
+import { useEffect } from 'react';
 
 export const MILESTONES = [
     {
@@ -60,8 +60,8 @@ export const MilestonePopup = ({ milestone, onClose }: { milestone: typeof MILES
                 <h4 className="font-bold text-white text-sm uppercase tracking-wider flex items-center gap-2">
                     Milestone Unlocked
                     <span className={`text-[10px] px-2 py-0.5 rounded-full border ${milestone.rarity === 'Legendary' ? 'border-purple-500/50 text-purple-400 bg-purple-500/10' :
-                            milestone.rarity === 'Elite' ? 'border-yellow-500/50 text-yellow-400 bg-yellow-500/10' :
-                                'border-blue-500/50 text-blue-400 bg-blue-500/10'
+                        milestone.rarity === 'Elite' ? 'border-yellow-500/50 text-yellow-400 bg-yellow-500/10' :
+                            'border-blue-500/50 text-blue-400 bg-blue-500/10'
                         }`}>
                         {milestone.rarity}
                     </span>
