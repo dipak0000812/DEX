@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { X, ChevronDown, AlertCircle } from 'lucide-react';
-import { Card } from './ui/Card';
+import { X, ChevronDown, AlertCircle, Plus } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { GlassCard } from './ui/GlassCard';
 import { Button } from './ui/Button';
 import { TokenSelector } from './TokenSelector';
 import { Faucet } from './Faucet';
@@ -71,8 +72,6 @@ export const AddLiquidityModal = ({ isOpen, onClose, onSuccess }: AddLiquidityMo
         }
     }, [isSuccessAdd, onSuccess, onClose]);
 
-    if (!isOpen) return null;
-
     const amount0BigInt = amount0 ? parseUnits(amount0, 18) : 0n;
     const amount1BigInt = amount1 ? parseUnits(amount1, 18) : 0n;
 
@@ -95,137 +94,157 @@ export const AddLiquidityModal = ({ isOpen, onClose, onSuccess }: AddLiquidityMo
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-            <Card className="w-full max-w-md p-6 relative bg-[#0A0E27]/95 border-primary/20">
-                <button
-                    onClick={onClose}
-                    className="absolute top-4 right-4 text-text-secondary hover:text-white transition-colors"
-                >
-                    <X className="w-5 h-5" />
-                </button>
-
-                <h2 className="text-xl font-bold mb-6">Add Liquidity</h2>
-
-                {!poolAddress ? (
-                    <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 mb-6 flex items-start gap-3">
-                        <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
-                        <div className="text-sm text-red-200">
-                            Pool not found for this pair. Please select a valid pair (e.g., TKA-TKB).
-                        </div>
-                    </div>
-                ) : null}
-
-                <div className="space-y-4 mb-6">
-                    {/* Token 0 Input */}
-                    <div className="bg-black/20 rounded-xl p-4 border border-white/5">
-                        <div className="flex justify-between mb-2">
-                            <span className="text-sm text-text-secondary">Input</span>
-                            <div className="flex items-center gap-2">
-                                <span className="text-sm text-text-secondary">Balance: {parseFloat(balance0).toFixed(4)}</span>
-                                <Faucet
-                                    tokenAddress={token0.address}
-                                    tokenSymbol={token0.symbol}
-                                    onSuccess={refetchBalance0}
-                                />
-                            </div>
-                        </div>
-                        <div className="flex gap-4 items-center">
-                            <input
-                                type="number"
-                                value={amount0}
-                                onChange={(e) => setAmount0(e.target.value)}
-                                placeholder="0.0"
-                                className="bg-transparent text-2xl font-bold text-white placeholder-text-secondary/30 outline-none w-full"
-                            />
-                            <button
-                                onClick={() => { setSelectingField('token0'); setIsTokenSelectorOpen(true); }}
-                                className="flex items-center gap-2 bg-white/10 hover:bg-white/20 transition-colors rounded-full px-3 py-1.5 font-bold shrink-0"
-                            >
-                                <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-xs">
-                                    {token0.logo}
-                                </div>
-                                {token0.symbol}
-                                <ChevronDown className="w-4 h-4" />
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className="flex justify-center -my-2 relative z-10">
-                        <div className="bg-[#0A0E27] p-1 rounded-full border border-white/10">
-                            <PlusIcon />
-                        </div>
-                    </div>
-
-                    {/* Token 1 Input */}
-                    <div className="bg-black/20 rounded-xl p-4 border border-white/5">
-                        <div className="flex justify-between mb-2">
-                            <span className="text-sm text-text-secondary">Input</span>
-                            <div className="flex items-center gap-2">
-                                <span className="text-sm text-text-secondary">Balance: {parseFloat(balance1).toFixed(4)}</span>
-                                <Faucet
-                                    tokenAddress={token1.address}
-                                    tokenSymbol={token1.symbol}
-                                    onSuccess={refetchBalance1}
-                                />
-                            </div>
-                        </div>
-                        <div className="flex gap-4 items-center">
-                            <input
-                                type="number"
-                                value={amount1}
-                                onChange={(e) => setAmount1(e.target.value)}
-                                placeholder="0.0"
-                                className="bg-transparent text-2xl font-bold text-white placeholder-text-secondary/30 outline-none w-full"
-                            />
-                            <button
-                                onClick={() => { setSelectingField('token1'); setIsTokenSelectorOpen(true); }}
-                                className="flex items-center gap-2 bg-white/10 hover:bg-white/20 transition-colors rounded-full px-3 py-1.5 font-bold shrink-0"
-                            >
-                                <div className="w-6 h-6 rounded-full bg-purple-500 flex items-center justify-center text-xs">
-                                    {token1.logo}
-                                </div>
-                                {token1.symbol}
-                                <ChevronDown className="w-4 h-4" />
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="space-y-3">
-                    {needsApproval0 && (
-                        <Button
-                            className="w-full"
-                            variant="outline"
-                            onClick={approve0}
-                            isLoading={isApproving0 || isConfirmingApprove0}
-                            disabled={!poolAddress}
-                        >
-                            Approve {token0.symbol}
-                        </Button>
-                    )}
-                    {needsApproval1 && (
-                        <Button
-                            className="w-full"
-                            variant="outline"
-                            onClick={approve1}
-                            isLoading={isApproving1 || isConfirmingApprove1}
-                            disabled={!poolAddress}
-                        >
-                            Approve {token1.symbol}
-                        </Button>
-                    )}
-
-                    <Button
-                        className="w-full"
-                        glow
-                        onClick={handleAddLiquidity}
-                        isLoading={isAdding || isConfirmingAdd}
-                        disabled={!poolAddress || !amount0 || !amount1 || !!needsApproval0 || !!needsApproval1}
+        <AnimatePresence>
+            {isOpen && (
+                <>
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={onClose}
+                        className="fixed inset-0 bg-black/60 backdrop-blur-md z-50"
+                    />
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                        transition={{ type: "spring", duration: 0.5 }}
+                        className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md z-50 px-4"
                     >
-                        {isAdding || isConfirmingAdd ? 'Adding Liquidity...' : 'Add Liquidity'}
-                    </Button>
-                </div>
-            </Card>
+                        <GlassCard className="w-full p-6 relative border-primary/20 shadow-2xl">
+                            <div className="flex justify-between items-center mb-6">
+                                <h2 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/80">Add Liquidity</h2>
+                                <button
+                                    onClick={onClose}
+                                    className="p-2 hover:bg-white/10 rounded-xl transition-colors"
+                                >
+                                    <X className="w-5 h-5 text-text-secondary" />
+                                </button>
+                            </div>
+
+                            {!poolAddress ? (
+                                <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4 mb-6 flex items-start gap-3">
+                                    <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
+                                    <div className="text-sm text-red-200">
+                                        Pool not found for this pair. Please select a valid pair (e.g., TKA-TKB).
+                                    </div>
+                                </div>
+                            ) : null}
+
+                            <div className="space-y-4 mb-6">
+                                {/* Token 0 Input */}
+                                <div className="bg-black/20 rounded-2xl p-4 border border-white/5 hover:border-white/10 transition-colors">
+                                    <div className="flex justify-between mb-2">
+                                        <span className="text-sm text-text-secondary font-medium">Input</span>
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-sm text-text-secondary">Balance: {parseFloat(balance0).toFixed(4)}</span>
+                                            <Faucet
+                                                tokenAddress={token0.address}
+                                                tokenSymbol={token0.symbol}
+                                                onSuccess={refetchBalance0}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-4 items-center">
+                                        <input
+                                            type="number"
+                                            value={amount0}
+                                            onChange={(e) => setAmount0(e.target.value)}
+                                            placeholder="0.0"
+                                            className="bg-transparent text-3xl font-bold text-white placeholder-text-secondary/30 outline-none w-full"
+                                        />
+                                        <button
+                                            onClick={() => { setSelectingField('token0'); setIsTokenSelectorOpen(true); }}
+                                            className="flex items-center gap-2 bg-white/10 hover:bg-white/20 transition-colors rounded-xl px-3 py-2 font-bold shrink-0 border border-white/5"
+                                        >
+                                            <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-xs shadow-inner">
+                                                {token0.logo}
+                                            </div>
+                                            {token0.symbol}
+                                            <ChevronDown className="w-4 h-4" />
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-center -my-3 relative z-10">
+                                    <div className="bg-[#0A0E27] p-1.5 rounded-xl border border-white/10 shadow-lg">
+                                        <Plus className="w-4 h-4 text-text-secondary" />
+                                    </div>
+                                </div>
+
+                                {/* Token 1 Input */}
+                                <div className="bg-black/20 rounded-2xl p-4 border border-white/5 hover:border-white/10 transition-colors">
+                                    <div className="flex justify-between mb-2">
+                                        <span className="text-sm text-text-secondary font-medium">Input</span>
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-sm text-text-secondary">Balance: {parseFloat(balance1).toFixed(4)}</span>
+                                            <Faucet
+                                                tokenAddress={token1.address}
+                                                tokenSymbol={token1.symbol}
+                                                onSuccess={refetchBalance1}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-4 items-center">
+                                        <input
+                                            type="number"
+                                            value={amount1}
+                                            onChange={(e) => setAmount1(e.target.value)}
+                                            placeholder="0.0"
+                                            className="bg-transparent text-3xl font-bold text-white placeholder-text-secondary/30 outline-none w-full"
+                                        />
+                                        <button
+                                            onClick={() => { setSelectingField('token1'); setIsTokenSelectorOpen(true); }}
+                                            className="flex items-center gap-2 bg-white/10 hover:bg-white/20 transition-colors rounded-xl px-3 py-2 font-bold shrink-0 border border-white/5"
+                                        >
+                                            <div className="w-6 h-6 rounded-full bg-purple-500 flex items-center justify-center text-xs shadow-inner">
+                                                {token1.logo}
+                                            </div>
+                                            {token1.symbol}
+                                            <ChevronDown className="w-4 h-4" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="space-y-3">
+                                {needsApproval0 && (
+                                    <Button
+                                        className="w-full py-6 text-lg"
+                                        variant="outline"
+                                        onClick={approve0}
+                                        isLoading={isApproving0 || isConfirmingApprove0}
+                                        disabled={!poolAddress}
+                                    >
+                                        Approve {token0.symbol}
+                                    </Button>
+                                )}
+                                {needsApproval1 && (
+                                    <Button
+                                        className="w-full py-6 text-lg"
+                                        variant="outline"
+                                        onClick={approve1}
+                                        isLoading={isApproving1 || isConfirmingApprove1}
+                                        disabled={!poolAddress}
+                                    >
+                                        Approve {token1.symbol}
+                                    </Button>
+                                )}
+
+                                <Button
+                                    className="w-full py-6 text-lg font-bold"
+                                    glow
+                                    onClick={handleAddLiquidity}
+                                    isLoading={isAdding || isConfirmingAdd}
+                                    disabled={!poolAddress || !amount0 || !amount1 || !!needsApproval0 || !!needsApproval1}
+                                >
+                                    {isAdding || isConfirmingAdd ? 'Adding Liquidity...' : 'Add Liquidity'}
+                                </Button>
+                            </div>
+                        </GlassCard>
+                    </motion.div>
+                </>
+            )}
 
             <TokenSelector
                 isOpen={isTokenSelectorOpen}
@@ -233,13 +252,6 @@ export const AddLiquidityModal = ({ isOpen, onClose, onSuccess }: AddLiquidityMo
                 onSelect={handleTokenSelect}
                 selectedToken={selectingField === 'token0' ? token0 : token1}
             />
-        </div>
+        </AnimatePresence>
     );
 };
-
-const PlusIcon = () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-text-secondary">
-        <line x1="12" y1="5" x2="12" y2="19"></line>
-        <line x1="5" y1="12" x2="19" y2="12"></line>
-    </svg>
-);

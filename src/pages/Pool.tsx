@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Plus, TrendingUp, Droplets, ArrowRight } from 'lucide-react';
+import { Plus, TrendingUp, Droplets, ArrowRight, Wallet, Search, Filter } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Card } from '../components/ui/Card';
+import { GlassCard } from '../components/ui/GlassCard';
 import { Button } from '../components/ui/Button';
 import { useWallet } from '../hooks/useWallet';
 import { useUserPositions } from '../hooks/useUserPositions';
@@ -41,16 +41,48 @@ const Pool = () => {
         { pair: 'TKA/TKC', tvl: '$2.1M', vol: '$980K', apr: '24.8%' },
     ];
 
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1
+            }
+        }
+    };
+
+    const itemVariants = {
+        hidden: { y: 20, opacity: 0 },
+        visible: {
+            y: 0,
+            opacity: 1
+        }
+    };
+
     return (
-        <div className="max-w-7xl mx-auto px-4 py-8">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="max-w-7xl mx-auto px-4 py-12">
+            {/* Background Elements */}
+            <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+                <div className="absolute top-[20%] left-[10%] w-[30%] h-[30%] bg-primary/10 rounded-full blur-[100px]" />
+                <div className="absolute bottom-[20%] right-[10%] w-[30%] h-[30%] bg-secondary/10 rounded-full blur-[100px]" />
+            </div>
+
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
 
                 {/* Main Content */}
-                <div className="lg:col-span-2 space-y-6">
+                <div className="lg:col-span-2 space-y-8">
                     {/* Header */}
-                    <div className="flex justify-between items-center">
-                        <h1 className="text-3xl font-bold">Pools</h1>
-                        <Button glow onClick={() => setShowAddLiquidity(true)}>
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div>
+                            <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">Pools</h1>
+                            <p className="text-text-secondary mt-1">Provide liquidity and earn fees</p>
+                        </div>
+                        <Button
+                            glow
+                            size="lg"
+                            onClick={() => setShowAddLiquidity(true)}
+                            className="shadow-lg shadow-primary/20"
+                        >
                             <Plus className="w-5 h-5 mr-2" />
                             New Position
                         </Button>
@@ -63,59 +95,109 @@ const Pool = () => {
                         onSuccess={refetch}
                     />
 
+                    {/* Stats Cards */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <GlassCard className="p-4">
+                            <div className="text-text-secondary text-sm mb-1">Total Value Locked</div>
+                            <div className="text-2xl font-bold text-white">$4.2M</div>
+                            <div className="text-green-400 text-xs flex items-center mt-1">
+                                <TrendingUp className="w-3 h-3 mr-1" /> +5.2%
+                            </div>
+                        </GlassCard>
+                        <GlassCard className="p-4">
+                            <div className="text-text-secondary text-sm mb-1">24h Volume</div>
+                            <div className="text-2xl font-bold text-white">$1.5M</div>
+                            <div className="text-green-400 text-xs flex items-center mt-1">
+                                <TrendingUp className="w-3 h-3 mr-1" /> +12.8%
+                            </div>
+                        </GlassCard>
+                        <GlassCard className="p-4">
+                            <div className="text-text-secondary text-sm mb-1">24h Fees</div>
+                            <div className="text-2xl font-bold text-white">$4.5K</div>
+                            <div className="text-green-400 text-xs flex items-center mt-1">
+                                <TrendingUp className="w-3 h-3 mr-1" /> +8.4%
+                            </div>
+                        </GlassCard>
+                    </div>
+
                     {/* User Positions */}
                     <div className="space-y-4">
-                        <h2 className="text-xl font-semibold text-text-secondary">Your Positions</h2>
+                        <div className="flex justify-between items-center">
+                            <h2 className="text-xl font-semibold text-white">Your Positions</h2>
+                            <div className="flex gap-2">
+                                <div className="relative hidden sm:block">
+                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary" />
+                                    <input
+                                        type="text"
+                                        placeholder="Search pools"
+                                        className="bg-white/5 border border-white/10 rounded-lg pl-9 pr-4 py-1.5 text-sm text-white placeholder-text-secondary focus:outline-none focus:border-primary/50 transition-colors"
+                                    />
+                                </div>
+                                <button className="p-2 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors">
+                                    <Filter className="w-4 h-4 text-text-secondary" />
+                                </button>
+                            </div>
+                        </div>
 
                         {!isConnected ? (
-                            <Card className="p-12 flex flex-col items-center justify-center text-center border-dashed border-white/10">
-                                <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4">
-                                    <Droplets className="w-8 h-8 text-text-secondary" />
+                            <GlassCard className="p-12 flex flex-col items-center justify-center text-center border-dashed border-white/10 bg-white/5">
+                                <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mb-6 animate-pulse">
+                                    <Wallet className="w-10 h-10 text-primary" />
                                 </div>
-                                <h3 className="text-lg font-medium mb-2">Connect your wallet</h3>
-                                <p className="text-text-secondary mb-6 max-w-xs">
+                                <h3 className="text-xl font-bold mb-2">Connect your wallet</h3>
+                                <p className="text-text-secondary mb-8 max-w-xs">
                                     Connect your wallet to view your liquidity positions and earn fees.
                                 </p>
-                                <Button onClick={connectWallet}>Connect Wallet</Button>
-                            </Card>
+                                <Button onClick={connectWallet} glow size="lg">Connect Wallet</Button>
+                            </GlassCard>
                         ) : isLoading ? (
-                            <div className="text-center py-12 text-text-secondary">Loading positions...</div>
+                            <div className="text-center py-20">
+                                <div className="animate-spin w-10 h-10 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4" />
+                                <div className="text-text-secondary">Loading positions...</div>
+                            </div>
                         ) : positions?.length === 0 ? (
-                            <Card className="p-12 flex flex-col items-center justify-center text-center border-dashed border-white/10">
-                                <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4">
-                                    <Droplets className="w-8 h-8 text-text-secondary" />
+                            <GlassCard className="p-12 flex flex-col items-center justify-center text-center border-dashed border-white/10 bg-white/5">
+                                <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mb-6">
+                                    <Droplets className="w-10 h-10 text-text-secondary" />
                                 </div>
-                                <h3 className="text-lg font-medium mb-2">No active positions</h3>
-                                <p className="text-text-secondary mb-6 max-w-xs">
+                                <h3 className="text-xl font-bold mb-2">No active positions</h3>
+                                <p className="text-text-secondary mb-8 max-w-xs">
                                     Add liquidity to a pool to start earning trading fees.
                                 </p>
-                                <Button onClick={() => setShowAddLiquidity(true)}>Add Liquidity</Button>
-                            </Card>
+                                <Button onClick={() => setShowAddLiquidity(true)} variant="outline">Add Liquidity</Button>
+                            </GlassCard>
                         ) : (
-                            <div className="grid gap-4">
+                            <motion.div
+                                variants={containerVariants}
+                                initial="hidden"
+                                animate="visible"
+                                className="grid gap-4"
+                            >
                                 {positions?.map((pos) => (
                                     <motion.div
                                         key={pos.poolAddress}
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
+                                        variants={itemVariants}
                                     >
-                                        <Card className="p-6 hover:border-primary/30 transition-colors cursor-pointer group">
+                                        <GlassCard hoverEffect className="p-6 cursor-pointer group">
                                             <div className="flex justify-between items-center">
                                                 <div className="flex items-center gap-4">
-                                                    <div className="flex -space-x-2">
-                                                        <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center border-2 border-[#0A0E27]">
+                                                    <div className="flex -space-x-3">
+                                                        <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center border-4 border-[#0A0E27] shadow-lg z-10">
                                                             {pos.token0[0]}
                                                         </div>
-                                                        <div className="w-10 h-10 rounded-full bg-purple-500 flex items-center justify-center border-2 border-[#0A0E27]">
+                                                        <div className="w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center border-4 border-[#0A0E27] shadow-lg">
                                                             {pos.token1[0]}
                                                         </div>
                                                     </div>
                                                     <div>
-                                                        <h3 className="font-bold text-lg">{pos.poolName}</h3>
+                                                        <h3 className="font-bold text-lg group-hover:text-primary transition-colors">{pos.poolName}</h3>
                                                         <div className="flex items-center gap-2 text-sm text-text-secondary">
-                                                            <span className="bg-white/10 px-2 py-0.5 rounded text-xs">0.05%</span>
+                                                            <span className="bg-green-500/10 text-green-400 px-2 py-0.5 rounded text-xs font-medium border border-green-500/20">0.05%</span>
                                                             <span>•</span>
-                                                            <span className="text-green-400">Active</span>
+                                                            <span className="text-green-400 flex items-center gap-1">
+                                                                <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                                                                Active
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -124,10 +206,10 @@ const Pool = () => {
                                                     <div className="text-xl font-bold">{parseFloat(pos.liquidityFormatted).toFixed(4)} LP</div>
                                                 </div>
                                             </div>
-                                        </Card>
+                                        </GlassCard>
                                     </motion.div>
                                 ))}
-                            </div>
+                            </motion.div>
                         )}
                     </div>
                 </div>
@@ -135,40 +217,43 @@ const Pool = () => {
                 {/* Sidebar */}
                 <div className="space-y-6">
                     {/* Top Pools */}
-                    <Card className="p-6">
-                        <h3 className="font-bold mb-4 flex items-center gap-2">
+                    <GlassCard className="p-6">
+                        <h3 className="font-bold mb-6 flex items-center gap-2 text-lg">
                             <TrendingUp className="w-5 h-5 text-primary" />
                             Top Pools
                         </h3>
-                        <div className="space-y-4">
+                        <div className="space-y-2">
                             {topPools.map((pool, i) => (
-                                <div key={i} className="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-colors cursor-pointer">
-                                    <div className="flex items-center gap-3">
-                                        <span className="text-text-secondary font-mono text-sm">{i + 1}</span>
+                                <div key={i} className="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-colors cursor-pointer group">
+                                    <div className="flex items-center gap-4">
+                                        <span className="text-text-secondary font-mono text-sm w-4">{i + 1}</span>
                                         <div>
-                                            <div className="font-medium">{pool.pair}</div>
+                                            <div className="font-bold group-hover:text-primary transition-colors">{pool.pair}</div>
                                             <div className="text-xs text-text-secondary">TVL: {pool.tvl}</div>
                                         </div>
                                     </div>
                                     <div className="text-right">
-                                        <div className="text-green-400 font-medium">{pool.apr}</div>
+                                        <div className="text-green-400 font-bold">{pool.apr}</div>
                                         <div className="text-xs text-text-secondary">APR</div>
                                     </div>
                                 </div>
                             ))}
                         </div>
-                    </Card>
+                        <Button variant="ghost" className="w-full mt-4 text-sm text-text-secondary hover:text-white">
+                            View All Pools
+                        </Button>
+                    </GlassCard>
 
                     {/* Learn Card */}
-                    <Card className="p-6 bg-gradient-to-br from-primary/10 to-secondary/10 border-primary/20">
-                        <h3 className="font-bold mb-2">Liquidity Provider Rewards</h3>
-                        <p className="text-sm text-text-secondary mb-4">
-                            Liquidity providers earn a 0.05% fee on all trades proportional to their share of the pool. Fees are added to the pool, accruing in real time and can be claimed by withdrawing your liquidity.
+                    <GlassCard gradient className="p-6 border-primary/20">
+                        <h3 className="font-bold mb-2 text-lg">Liquidity Provider Rewards</h3>
+                        <p className="text-sm text-text-secondary mb-6 leading-relaxed">
+                            Liquidity providers earn a 0.05% fee on all trades proportional to their share of the pool. Fees are added to the pool, accruing in real time.
                         </p>
-                        <a href="#" className="text-primary text-sm font-medium hover:underline flex items-center gap-1">
-                            Read more <ArrowRight className="w-4 h-4" />
+                        <a href="#" className="inline-flex items-center gap-2 text-primary text-sm font-bold hover:gap-3 transition-all">
+                            Read Documentation <ArrowRight className="w-4 h-4" />
                         </a>
-                    </Card>
+                    </GlassCard>
                 </div>
             </div>
         </div>
