@@ -13,13 +13,14 @@ import { TOKENS, POOLS, type Token } from '../contracts/addresses';
 import { useReadContract } from 'wagmi';
 import { ERC20_ABI } from '../contracts/abis/ERC20ABI';
 import { formatUnits, parseUnits } from 'viem';
+import { MarketSentiment } from '../features/MarketSentiment';
 
 const Swap = () => {
     const { address, isConnected, connectWallet } = useWallet();
 
     // State with explicit type
-    const [fromToken, setFromToken] = useState<Token>(TOKENS.TKA);
-    const [toToken, setToToken] = useState<Token>(TOKENS.TKB);
+    const [fromToken, setFromToken] = useState<Token>(TOKENS.SWIFT);
+    const [toToken, setToToken] = useState<Token>(TOKENS.BOLT);
     const [fromAmount, setFromAmount] = useState('');
     // Settings State
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -154,9 +155,11 @@ const Swap = () => {
                         initial={{ opacity: 0, x: -20, width: 0 }}
                         animate={{ opacity: 1, x: 0, width: 'auto' }}
                         exit={{ opacity: 0, x: -20, width: 0 }}
-                        className="hidden lg:block w-full max-w-2xl overflow-hidden"
+                        className="hidden lg:block w-full max-w-2xl space-y-6"
                     >
-                        <GlassCard className="h-[600px] p-6 flex flex-col">
+                        <MarketSentiment />
+
+                        <GlassCard className="h-[500px] p-6 flex flex-col">
                             <div className="flex justify-between items-center mb-6">
                                 <div className="flex items-center gap-2">
                                     <div className="flex -space-x-2">

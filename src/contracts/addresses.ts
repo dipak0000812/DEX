@@ -33,26 +33,26 @@ export const CONTRACTS = {
 
 // Token addresses
 export const TOKENS = {
-    TKA: {
+    SWIFT: {
         address: DEPLOYED_TOKENS.TKA,
-        symbol: 'TKA',
-        name: 'Token A',
+        symbol: 'SWIFT',
+        name: 'Swift Protocol',
         decimals: 18,
-        logo: '🔵'
+        logo: '⚡'
     },
-    TKB: {
+    BOLT: {
         address: DEPLOYED_TOKENS.TKB,
-        symbol: 'TKB',
-        name: 'Token B',
+        symbol: 'BOLT',
+        name: 'Bolt Network',
         decimals: 18,
-        logo: '🟢'
+        logo: '🔋'
     },
-    TKC: {
+    FLASH: {
         address: DEPLOYED_TOKENS.TKC,
-        symbol: 'TKC',
-        name: 'Token C',
+        symbol: 'FLASH',
+        name: 'Flash Finance',
         decimals: 18,
-        logo: '🟣'
+        logo: '✨'
     }
 } as const;
 
@@ -66,9 +66,9 @@ export interface Token {
 
 // Pool addresses
 export const POOLS = {
-    'TKA-TKB': DEPLOYED_POOLS['TKA-TKB'],
-    'TKB-TKC': DEPLOYED_POOLS['TKB-TKC'],
-    'TKA-TKC': DEPLOYED_POOLS['TKA-TKC']
+    'SWIFT-BOLT': DEPLOYED_POOLS['TKA-TKB'],
+    'BOLT-FLASH': DEPLOYED_POOLS['TKB-TKC'],
+    'SWIFT-FLASH': DEPLOYED_POOLS['TKA-TKC']
 } as const;
 
 // Fee tiers

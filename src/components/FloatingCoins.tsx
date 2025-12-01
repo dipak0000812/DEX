@@ -16,7 +16,7 @@ const FloatingCoins = () => {
 
     useEffect(() => {
         // Generate random coins
-        const tokenLogos = [TOKENS.TKA.logo, TOKENS.TKB.logo, TOKENS.TKC.logo, '🦄', '💎', '🚀', '⚡', '🔥'];
+        const tokenLogos = [TOKENS.SWIFT.logo, TOKENS.BOLT.logo, TOKENS.FLASH.logo, '🦄', '💎', '🚀', '⚡', '🔥'];
         const newCoins = Array.from({ length: 15 }).map((_, i) => ({
             id: i,
             x: Math.random() * 100, // percentage

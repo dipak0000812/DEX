@@ -16,19 +16,19 @@ const Pool = () => {
     const mockPositions = [
         {
             poolAddress: '0xMockPool1',
-            token0: 'TKA',
-            token1: 'TKB',
+            token0: 'SWIFT',
+            token1: 'BOLT',
             liquidity: 123456789000000000000n,
             liquidityFormatted: '123.4567',
-            poolName: 'TKA-TKB'
+            poolName: 'SWIFT-BOLT'
         },
         {
             poolAddress: '0xMockPool2',
-            token0: 'TKB',
-            token1: 'TKC',
+            token0: 'BOLT',
+            token1: 'FLASH',
             liquidity: 98765432100000000000n,
             liquidityFormatted: '98.7654',
-            poolName: 'TKB-TKC'
+            poolName: 'BOLT-FLASH'
         }
     ];
 
@@ -36,9 +36,9 @@ const Pool = () => {
 
     // Mock data for top pools (since we don't have a subgraph)
     const topPools = [
-        { pair: 'TKA/TKB', tvl: '$1.2M', vol: '$450K', apr: '12.5%' },
-        { pair: 'TKB/TKC', tvl: '$850K', vol: '$120K', apr: '8.2%' },
-        { pair: 'TKA/TKC', tvl: '$2.1M', vol: '$980K', apr: '24.8%' },
+        { pair: 'SWIFT/BOLT', tvl: '$1.2M', vol: '$450K', apr: '12.5%' },
+        { pair: 'BOLT/FLASH', tvl: '$850K', vol: '$120K', apr: '8.2%' },
+        { pair: 'SWIFT/FLASH', tvl: '$2.1M', vol: '$980K', apr: '24.8%' },
     ];
 
     const containerVariants = {

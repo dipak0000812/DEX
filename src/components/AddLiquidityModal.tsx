@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { X, ChevronDown, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GlassCard } from './ui/GlassCard';
@@ -22,8 +23,8 @@ interface AddLiquidityModalProps {
 
 export const AddLiquidityModal = ({ isOpen, onClose, onSuccess }: AddLiquidityModalProps) => {
     const { address } = useWallet();
-    const [token0, setToken0] = useState<Token>(TOKENS.TKA);
-    const [token1, setToken1] = useState<Token>(TOKENS.TKB);
+    const [token0, setToken0] = useState<Token>(TOKENS.SWIFT);
+    const [token1, setToken1] = useState<Token>(TOKENS.BOLT);
     const [amount0, setAmount0] = useState('');
     const [amount1, setAmount1] = useState('');
 
@@ -95,7 +96,7 @@ export const AddLiquidityModal = ({ isOpen, onClose, onSuccess }: AddLiquidityMo
 
     return (
         <AnimatePresence>
-            {isOpen && (
+            {isOpen && createPortal(
                 <>
                     <motion.div
                         initial={{ opacity: 0 }}
@@ -126,7 +127,7 @@ export const AddLiquidityModal = ({ isOpen, onClose, onSuccess }: AddLiquidityMo
                                 <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4 mb-6 flex items-start gap-3">
                                     <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
                                     <div className="text-sm text-red-200">
-                                        Pool not found for this pair. Please select a valid pair (e.g., TKA-TKB).
+                                        Pool not found for this pair. Please select a valid pair (e.g., SWIFT-BOLT).
                                     </div>
                                 </div>
                             ) : null}
@@ -311,9 +312,9 @@ export const AddLiquidityModal = ({ isOpen, onClose, onSuccess }: AddLiquidityMo
                             </div>
                         </GlassCard>
                     </motion.div>
-                </>
+                </>,
+                document.body
             )}
-
             <TokenSelector
                 isOpen={isTokenSelectorOpen}
                 onClose={() => setIsTokenSelectorOpen(false)}

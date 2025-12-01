@@ -3,6 +3,7 @@ import { ArrowRight, Zap, Layers, GitMerge, TrendingUp, Activity, Shield } from 
 import { Button } from '../components/ui/Button';
 import { GlassCard } from '../components/ui/GlassCard';
 import { Link } from 'react-router-dom';
+import { AboutSection } from '../components/AboutSection';
 
 import FloatingCoins from '../components/FloatingCoins';
 
@@ -59,24 +60,23 @@ const Home = () => {
                         </motion.div>
 
                         <motion.h1 variants={itemVariants} className="text-5xl sm:text-7xl lg:text-8xl font-bold leading-tight mb-6 tracking-tight">
-                            Trade Without <br />
-                            <span className="text-gradient-primary animate-glow inline-block">Limits.</span>
+                            High-Performance <br />
+                            <span className="text-gradient-primary animate-glow inline-block">Decentralized Trading.</span>
                         </motion.h1>
 
                         <motion.p variants={itemVariants} className="text-xl text-text-secondary mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                            Experience the next evolution of decentralized trading.
-                            Lightning-fast swaps, concentrated liquidity, and zero-slippage routing.
+                            Experience institutional-grade execution speed, deep liquidity, and zero-latency matching on the SwiftSwap protocol.
                         </motion.p>
 
                         <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
                             <Link to="/swap" className="w-full sm:w-auto">
-                                <Button size="lg" glow variant="primary" className="w-full sm:w-auto text-lg px-8 h-14">
-                                    Launch App
+                                <Button size="lg" glow variant="primary" className="w-full sm:w-auto text-lg px-8 h-14 bg-gradient-to-r from-blue-500 to-cyan-400 border-none">
+                                    Launch Terminal
                                     <ArrowRight className="ml-2 w-5 h-5" />
                                 </Button>
                             </Link>
                             <Button variant="glass" size="lg" className="w-full sm:w-auto text-lg px-8 h-14">
-                                View Documentation
+                                Protocol Docs
                             </Button>
                         </motion.div>
 
@@ -85,19 +85,19 @@ const Home = () => {
                             <div>
                                 <div className="text-text-secondary text-sm font-medium mb-1 uppercase tracking-wider">Total Value Locked</div>
                                 <div className="text-3xl font-bold text-white flex items-baseline gap-1">
-                                    $2.4B<span className="text-accent text-lg">+</span>
+                                    $2.4B<span className="text-blue-400 text-lg">+</span>
                                 </div>
                             </div>
                             <div>
-                                <div className="text-text-secondary text-sm font-medium mb-1 uppercase tracking-wider">Total Volume</div>
+                                <div className="text-text-secondary text-sm font-medium mb-1 uppercase tracking-wider">24h Volume</div>
                                 <div className="text-3xl font-bold text-white flex items-baseline gap-1">
-                                    $450B<span className="text-accent text-lg">+</span>
+                                    $450M<span className="text-blue-400 text-lg">+</span>
                                 </div>
                             </div>
                             <div>
-                                <div className="text-text-secondary text-sm font-medium mb-1 uppercase tracking-wider">Total Users</div>
+                                <div className="text-text-secondary text-sm font-medium mb-1 uppercase tracking-wider">Active Traders</div>
                                 <div className="text-3xl font-bold text-white flex items-baseline gap-1">
-                                    1.2M<span className="text-accent text-lg">+</span>
+                                    1.2M<span className="text-blue-400 text-lg">+</span>
                                 </div>
                             </div>
                         </motion.div>
@@ -112,9 +112,9 @@ const Home = () => {
                     >
                         <div className="relative w-full h-full flex items-center justify-center">
                             {/* Orbit Rings */}
-                            <div className="absolute w-[500px] h-[500px] border border-primary/20 rounded-full animate-spin-slow" />
-                            <div className="absolute w-[350px] h-[350px] border border-secondary/20 rounded-full animate-spin-slow" style={{ animationDirection: 'reverse', animationDuration: '15s' }} />
-                            <div className="absolute w-[200px] h-[200px] border border-accent/20 rounded-full animate-spin-slow" style={{ animationDuration: '10s' }} />
+                            <div className="absolute w-[500px] h-[500px] border border-blue-500/20 rounded-full animate-spin-slow" />
+                            <div className="absolute w-[350px] h-[350px] border border-cyan-500/20 rounded-full animate-spin-slow" style={{ animationDirection: 'reverse', animationDuration: '15s' }} />
+                            <div className="absolute w-[200px] h-[200px] border border-white/10 rounded-full animate-spin-slow" style={{ animationDuration: '10s' }} />
 
                             {/* Floating Cards */}
                             <motion.div
@@ -122,13 +122,13 @@ const Home = () => {
                                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                                 className="absolute top-[10%] left-[10%] z-20"
                             >
-                                <GlassCard className="p-4 flex items-center gap-3 w-48">
-                                    <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center text-primary">
+                                <GlassCard className="p-4 flex items-center gap-3 w-48 border-blue-500/20">
+                                    <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400">
                                         <Zap className="w-6 h-6" />
                                     </div>
                                     <div>
-                                        <div className="text-xs text-text-secondary">Speed</div>
-                                        <div className="font-bold text-white">Instant</div>
+                                        <div className="text-xs text-text-secondary">Latency</div>
+                                        <div className="font-bold text-white"> &lt; 10ms</div>
                                     </div>
                                 </GlassCard>
                             </motion.div>
@@ -138,13 +138,13 @@ const Home = () => {
                                 transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                                 className="absolute bottom-[20%] right-[10%] z-20"
                             >
-                                <GlassCard className="p-4 flex items-center gap-3 w-48">
-                                    <div className="w-10 h-10 rounded-lg bg-secondary/20 flex items-center justify-center text-secondary">
+                                <GlassCard className="p-4 flex items-center gap-3 w-48 border-cyan-500/20">
+                                    <div className="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-400">
                                         <Layers className="w-6 h-6" />
                                     </div>
                                     <div>
                                         <div className="text-xs text-text-secondary">Liquidity</div>
-                                        <div className="font-bold text-white">Deep</div>
+                                        <div className="font-bold text-white">Aggregated</div>
                                     </div>
                                 </GlassCard>
                             </motion.div>
@@ -154,8 +154,8 @@ const Home = () => {
                                 transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                                 className="absolute top-[30%] right-[5%] z-10"
                             >
-                                <GlassCard className="p-4 flex items-center gap-3 w-48">
-                                    <div className="w-10 h-10 rounded-lg bg-accent/20 flex items-center justify-center text-accent">
+                                <GlassCard className="p-4 flex items-center gap-3 w-48 border-purple-500/20">
+                                    <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400">
                                         <Shield className="w-6 h-6" />
                                     </div>
                                     <div>
@@ -166,13 +166,16 @@ const Home = () => {
                             </motion.div>
 
                             {/* Central Orb */}
-                            <div className="relative z-0 w-32 h-32 rounded-full bg-gradient-to-br from-primary to-secondary blur-md animate-pulse-slow">
+                            <div className="relative z-0 w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 blur-md animate-pulse-slow">
                                 <div className="absolute inset-0 bg-white/20 rounded-full backdrop-blur-md" />
                             </div>
                         </div>
                     </motion.div>
                 </div>
             </section>
+
+            {/* About Section */}
+            <AboutSection />
 
             {/* Features Section */}
             <section className="py-32 px-4 sm:px-6 lg:px-8 relative z-10">
@@ -184,7 +187,7 @@ const Home = () => {
                             viewport={{ once: true }}
                             className="text-3xl sm:text-5xl font-bold mb-6"
                         >
-                            Why Choose <span className="text-gradient-secondary">DEX V3?</span>
+                            Why Choose <span className="text-gradient-secondary">SwiftSwap?</span>
                         </motion.h2>
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
@@ -200,17 +203,17 @@ const Home = () => {
                     <div className="grid md:grid-cols-3 gap-8">
                         {[
                             {
-                                icon: <Zap className="w-8 h-8 text-primary" />,
+                                icon: <Zap className="w-8 h-8 text-blue-400" />,
                                 title: "Lightning Fast Swaps",
                                 desc: "Optimized routing algorithm ensures you get the best price with minimal slippage and instant execution."
                             },
                             {
-                                icon: <TrendingUp className="w-8 h-8 text-secondary" />,
+                                icon: <TrendingUp className="w-8 h-8 text-cyan-400" />,
                                 title: "Concentrated Liquidity",
                                 desc: "Maximize your capital efficiency by providing liquidity in specific price ranges."
                             },
                             {
-                                icon: <GitMerge className="w-8 h-8 text-accent" />,
+                                icon: <GitMerge className="w-8 h-8 text-purple-400" />,
                                 title: "Multi-hop Routing",
                                 desc: "Smart order routing splits your trade across multiple pools for the best possible output."
                             }
@@ -219,12 +222,12 @@ const Home = () => {
                                 key={idx}
                                 hoverEffect
                                 gradient
-                                className="p-8 group"
+                                className="p-8 group border-blue-500/10"
                             >
-                                <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-white/5 group-hover:border-primary/20 group-hover:shadow-[0_0_20px_rgba(0,245,255,0.2)]">
+                                <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-white/5 group-hover:border-blue-500/20 group-hover:shadow-[0_0_20px_rgba(14,165,233,0.2)]">
                                     {feature.icon}
                                 </div>
-                                <h3 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">{feature.title}</h3>
+                                <h3 className="text-2xl font-bold mb-4 group-hover:text-blue-400 transition-colors">{feature.title}</h3>
                                 <p className="text-text-secondary leading-relaxed text-lg">
                                     {feature.desc}
                                 </p>

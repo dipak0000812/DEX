@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { TOKENS, type Token } from '../contracts/addresses';
 import { GlassCard } from './ui/GlassCard';
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 
 interface TokenSelectorProps {
     isOpen: boolean;
@@ -22,7 +23,7 @@ export const TokenSelector = ({ isOpen, onClose, onSelect, selectedToken }: Toke
 
     return (
         <AnimatePresence>
-            {isOpen && (
+            {isOpen && createPortal(
                 <>
                     {/* Backdrop */}
                     <motion.div
@@ -78,8 +79,8 @@ export const TokenSelector = ({ isOpen, onClose, onSelect, selectedToken }: Toke
                                             }}
                                             disabled={selectedToken?.address === token.address}
                                             className={`w-full flex items-center gap-4 p-3 rounded-xl transition-all group ${selectedToken?.address === token.address
-                                                    ? 'bg-primary/10 border border-primary/20 cursor-default'
-                                                    : 'hover:bg-white/5 border border-transparent hover:border-white/5'
+                                                ? 'bg-primary/10 border border-primary/20 cursor-default'
+                                                : 'hover:bg-white/5 border border-transparent hover:border-white/5'
                                                 }`}
                                         >
                                             <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-xl shadow-inner group-hover:scale-110 transition-transform">
@@ -109,7 +110,8 @@ export const TokenSelector = ({ isOpen, onClose, onSelect, selectedToken }: Toke
                             </div>
                         </GlassCard>
                     </motion.div>
-                </>
+                </>,
+                document.body
             )}
         </AnimatePresence>
     );

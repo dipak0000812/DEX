@@ -20,11 +20,11 @@ const Analytics = () => {
     };
 
     const mockSwaps = [
-        { type: 'buy', pool: 'TKA-TKB', amount0: '100', timestamp: Date.now() - 100000, hash: '0x1234567890' },
+        { type: 'buy', pool: 'SWIFT-BOLT', amount0: '100', timestamp: Date.now() - 100000, hash: '0x1234567890' },
         { type: 'sell', pool: 'ETH-USDT', amount0: '0.5', timestamp: Date.now() - 200000, hash: '0xabcdef1234' },
-        { type: 'buy', pool: 'TKB-TKC', amount0: '500', timestamp: Date.now() - 300000, hash: '0x7890123456' },
-        { type: 'sell', pool: 'TKA-TKC', amount0: '200', timestamp: Date.now() - 400000, hash: '0x9876543210' },
-        { type: 'buy', pool: 'ETH-TKA', amount0: '1.2', timestamp: Date.now() - 500000, hash: '0xfedcba0987' },
+        { type: 'buy', pool: 'BOLT-FLASH', amount0: '500', timestamp: Date.now() - 300000, hash: '0x7890123456' },
+        { type: 'sell', pool: 'SWIFT-FLASH', amount0: '200', timestamp: Date.now() - 400000, hash: '0x9876543210' },
+        { type: 'buy', pool: 'ETH-SWIFT', amount0: '1.2', timestamp: Date.now() - 500000, hash: '0xfedcba0987' },
     ];
 
     const displaySwaps = swaps.length > 0 ? swaps : mockSwaps;
