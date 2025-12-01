@@ -1,0 +1,11 @@
+{
+  "stack": "ProviderError: Internal error\n    at HttpProvider.request (C:\\Users\\ACER\\Desktop\\DEX\\node_modules\\hardhat\\src\\internal\\core\\providers\\http.ts:116:21)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at ChainIdValidatorProvider._getChainIdFromEthNetVersion (C:\\Users\\ACER\\Desktop\\DEX\\node_modules\\hardhat\\src\\internal\\core\\providers\\chainId.ts:33:17)\n    at ChainIdValidatorProvider._getChainId (C:\\Users\\ACER\\Desktop\\DEX\\node_modules\\hardhat\\src\\internal\\core\\providers\\chainId.ts:17:25)\n    at ChainIdValidatorProvider.request (C:\\Users\\ACER\\Desktop\\DEX\\node_modules\\hardhat\\src\\internal\\core\\providers\\chainId.ts:56:29)\n    at getSigners (C:\\Users\\ACER\\Desktop\\DEX\\node_modules\\@nomicfoundation\\hardhat-ethers\\src\\internal\\helpers.ts:46:16)\n    at main (file:///C:/Users/ACER/Desktop/DEX/scripts/deploy.js:8:24)",
+  "message": "Internal error",
+  "name": "ProviderError",
+  "_stack": "ProviderError: Internal error\n    at HttpProvider.request (C:\\Users\\ACER\\Desktop\\DEX\\node_modules\\hardhat\\src\\internal\\core\\providers\\http.ts:116:21)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at ChainIdValidatorProvider._getChainIdFromEthNetVersion (C:\\Users\\ACER\\Desktop\\DEX\\node_modules\\hardhat\\src\\internal\\core\\providers\\chainId.ts:33:17)\n    at ChainIdValidatorProvider._getChainId (C:\\Users\\ACER\\Desktop\\DEX\\node_modules\\hardhat\\src\\internal\\core\\providers\\chainId.ts:17:25)\n    at ChainIdValidatorProvider.request (C:\\Users\\ACER\\Desktop\\DEX\\node_modules\\hardhat\\src\\internal\\core\\providers\\chainId.ts:56:29)\n    at getSigners (C:\\Users\\ACER\\Desktop\\DEX\\node_modules\\@nomicfoundation\\hardhat-ethers\\src\\internal\\helpers.ts:46:16)\n    at main (file:///C:/Users/ACER/Desktop/DEX/scripts/deploy.js:8:24)",
+  "code": -32603,
+  "_isProviderError": true,
+  "data": {
+    "message": "Internal error"
+  }
+}

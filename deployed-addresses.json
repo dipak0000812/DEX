@@ -1,0 +1,48 @@
+{
+  "network": "localhost",
+  "chainId": 31337,
+  "contracts": {
+    "factory": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    "router": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+  },
+  "tokens": {
+    "TKA": {
+      "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      "name": "Token A",
+      "symbol": "TKA",
+      "decimals": 18
+    },
+    "TKB": {
+      "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+      "name": "Token B",
+      "symbol": "TKB",
+      "decimals": 18
+    },
+    "TKC": {
+      "address": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+      "name": "Token C",
+      "symbol": "TKC",
+      "decimals": 18
+    }
+  },
+  "pools": {
+    "TKA-TKB": {
+      "address": "0xa16E02E87b7454126E5E10d957A927A7F5B5d2be",
+      "token0": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      "token1": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+      "fee": 500
+    },
+    "TKB-TKC": {
+      "address": "0xB7A5bd0345EF1Cc5E66bf61BdeC17D2461fBd968",
+      "token0": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+      "token1": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+      "fee": 100
+    },
+    "TKA-TKC": {
+      "address": "0xeEBe00Ac0756308ac4AaBfD76c05c4F3088B8883",
+      "token0": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      "token1": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+      "fee": 3000
+    }
+  }
+}
